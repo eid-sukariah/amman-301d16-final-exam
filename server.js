@@ -36,7 +36,7 @@ const client = new pg.Client(process.env.DATABASE_URL);
 // app routes here
 // -- WRITE YOUR ROUTES HERE --
 app.get('/', getAllData);
-// app.get('')
+app.post('/favorite-quotes', saveQout)
 
 
 // callback functions
@@ -45,13 +45,23 @@ function getAllData(req, res){
     
     const url = `https://thesimpsonsquoteapi.glitch.me/quotes?count=10`;
     
-    console.log('efwef');
-    superagent.get(url).then(x => {
+    // console.log('efwef');
+    superagent.get(url).set('User-Agent', '1.0').then(x => {
         console.log(x.body);
-        // const apiData = x.body.map(obj => new Qutes(obj));
+        const apiData = x.body.map(obj => new Qutes(obj));
         // res.send('dgs')
-        // res.render('home', {data: apiData});
+        res.render('home', {data: apiData});
     }).catch(error => console.log(`api error ${error}`))
+}
+
+function saveQout(req, res){
+    const sql = `INSERT INTO users (quote, character, image, characterDirection) VALUES($1 , $2, $3 , $4);`;
+    const {quote, character, image, characterDirection} = req.body;
+    const safeVal = [quote, character, image, characterDirection];
+
+    client.query(sql, safeVal).then(data =>{
+        res.redirect('favorite');
+    })
 }
 // helper functions
 function Qutes(info){

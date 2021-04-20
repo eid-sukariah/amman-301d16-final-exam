@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('layout/head')%>
+<body>
+    <%- include('layout/nav')%>
+
+    <div>
+        <%data.forEach(elem => {%>
+
+        <p><%= elem.quote%></p>
+        <p><%= elem.character%></p>
+        <img src="<%= elem.image%>" alt="">
+        <p><%= elem.characterDirection%></p>
+
+        <%})%>
+
+    </div>
+</body>
+</html>
