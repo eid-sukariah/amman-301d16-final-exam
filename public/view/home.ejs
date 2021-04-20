@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('layout/head')%>
+<body>
+    <%- include('layout/header')%>
+
+    <main>
+        <%data.forEach(elem => {%>
+            <div>
+                <p><%= elem.quote%></p>
+                <p><%= elem.character%></p>
+                <img src="<%= elem.image%>" alt="">
+                <p><%= elem.characterDirection%></p>
+            </div>
+            <form action="" method="POST">
+                <input type="hidden" value="<%= elem.quote%>" name="">
+                <input type="hidden" value="<%= elem.character%>" name="">
+                <input type="hidden" value="<%= elem.image%>" name="">
+                <input type="hidden" value="<%= elem.characterDirection%>" name="">
+                <input type="submit" value="add to fav">
+
+            </form>
+            <%})%>
+    </main>
+</body>
+</html>
